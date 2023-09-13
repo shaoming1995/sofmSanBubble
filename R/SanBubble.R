@@ -4,12 +4,16 @@
 #' @param watermark YES是有水印,NO是无水印
 #' @export
 SanBubble<-function(Bubble,Sankey,watermark){
-  #如果我们按照以往常规的绘制方法：
-  #指定绘图顺序（转换为因子）：
   Bubble$pathname <- factor(Bubble$pathname,levels = rev(Bubble$pathname))
   #基础富集气泡图：
   if(!require(ggsankey))devtools::install_github("davidsjoberg/ggsankey")
   if(!require(cols4all))install.packages('cols4all')
+  if(!require(ggplot2))install.packages('ggplot2')
+  if(!require(tidyverse))install.packages('tidyverse')
+  if(!require(cowplot))install.packages('cowplot')
+  if(!require(shinyjs))install.packages("shinyjs")
+  if(!require(kableExtra))install.packages("kableExtra")
+  if(!require(colorblindcheck))install.packages("colorblindcheck")
   library(tidyverse)
   library(ggsankey)
   library(ggplot2)
@@ -74,8 +78,13 @@ SanBubble<-function(Bubble,Sankey,watermark){
   #拼图(在p5的空白位置中插入p3)：
   if(watermark=="YES"){
     ggdraw() + draw_plot(p3) + draw_plot(p1, scale = 0.5, x = 0.55, y=-0.21, width=0.48, height=1.37)+
-      draw_label("桑基气泡图-医小研(抖音)", colour = "#80404080", size = 30, angle = 45)}else{
+      draw_label("桑基气泡图-医小研(抖音)", colour = "#80404080", size = 30, angle = 45)
+
+    }else{
         ggdraw() + draw_plot(p3) + draw_plot(p1, scale = 0.5, x = 0.55, y=-0.21, width=0.48, height=1.37)
-      }
-cat("绘图已经完成请关注抖音医小研究")
+
+        }
+
 }
+
+
